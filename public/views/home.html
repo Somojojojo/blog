@@ -1,0 +1,7 @@
+<article ng-repeat="post in posts">
+    <h3 class="postTitle">
+        <a href="#/post/{{ post.id }}">{{ post.title }}</a>
+    </h3>
+    <section class="postDate" data-originalDate="{{ post.originalDate }}">{{ post.datePosted }}</section>
+    <section class="blurb" ng-bind-html-unsafe="post.blurb"></section>
+</article>

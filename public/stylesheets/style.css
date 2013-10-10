@@ -1,7 +1,44 @@
+html,
 body {
-  padding: 50px;
+  height: 100%;
+}
+body {
+  padding: 0;
+  margin: 0;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background: #556270;
 }
 a {
   color: #00b7ff;
+}
+main {
+  width: 600px;
+  margin: 0 auto;
+}
+header {
+  font-size: 3em;
+  color: #fff;
+  text-shadow: 0 0 3px rgba(0,0,0,0.2);
+  padding: 44px 0;
+  text-align: center;
+}
+.content {
+  font-size: 1em;
+  background: #fff;
+  border-radius: 2px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  padding: 15px;
+  box-sizing: border-box;
+}
+.postTitle,
+.postDate {
+  display: inline-block;
+}
+.postDate {
+  font-size: 0.8em;
+  color: #bbb;
+  padding-left: 5px;
+}
+.blurb {
+  color: #333;
 }

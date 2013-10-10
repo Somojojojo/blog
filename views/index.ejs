@@ -1,11 +1,23 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
+<html ng-app="blogApp">
+	<head>
+		<title><%= title %></title>
+		<link rel='stylesheet' href='/stylesheets/style.css' />
+		<script src="http://www.parsecdn.com/js/parse-1.2.12.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+		<script src="javascripts/app.js"></script>
+		<script src="javascripts/factories.js"></script>
+		<script src="javascripts/services.js"></script>
+		<script src="javascripts/controllers.js"></script>
+	</head>
+	<body>
+		<div class="contentWrapper">
+			<main>
+				<header>Kyle Somogyi</header>
+				<section class="content">
+					<ng-view></ng-view>
+				</section>
+			</main>
+		</div>
+	</body>
 </html>
