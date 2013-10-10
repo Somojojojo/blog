@@ -17,7 +17,8 @@ app.config(function($routeProvider)
 		});
 });
 
-var socket = io.connect(window.location.origin);
+var host = location.origin.replace(/^http/, 'ws');
+var socket = io.connect(host);
 socket.on('message', function(data)
 {
 	switch(data.type)
