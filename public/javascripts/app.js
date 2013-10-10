@@ -16,3 +16,12 @@ app.config(function($routeProvider)
 			redirectTo: '/'
 		});
 });
+
+var socket = io.connect(window.location.origin);
+socket.on('message', function(data)
+{
+	switch(data.type)
+	{
+		default: break;
+	}
+});
