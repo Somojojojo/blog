@@ -11,34 +11,131 @@ body {
 a {
   color: #00b7ff;
 }
-main {
-  width: 600px;
-  margin: 0 auto;
-}
 header {
   font-size: 3em;
-  color: #fff;
-  text-shadow: 0 0 3px rgba(0,0,0,0.2);
-  padding: 44px 0;
-  text-align: center;
+  padding: 130px 0 10px;
+  position: relative;
+  overflow: hidden;
 }
-.content {
+header .background {
+  background: url("../images/header_bg.jpg") 50% 75% no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  -webkit-filter: blur(2px);
+  -moz-filter: blur(2px);
+  -o-filter: blur(2px);
+  filter: blur(2px);
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: -10px;
+  z-index: 1;
+}
+header h1 {
+  font-size: 1em;
+  color: rgba(255,255,255,0.6);
+  text-shadow: 0 0 3px rgba(0,0,0,0.2);
+  text-align: left;
+  display: block;
+  position: relative;
+  z-index: 2;
+  padding: 0 20px;
+}
+.contentWrapper {
+  position: relative;
+}
+.contentWrapper main {
+  position: absolute;
+  left: 200px;
+  right: 200px;
+}
+.contentWrapper main .content {
   font-size: 1em;
   background: #fff;
-  border-radius: 2px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  border-radius: 0 0 2px 2px;
   padding: 15px;
   box-sizing: border-box;
 }
-.postTitle,
-.postDate {
+.contentWrapper main .post {
+  max-height: 0;
+  opacity: 0;
+  display: block;
+  text-decoration: none;
+  position: relative;
+}
+.contentWrapper main .post .clock {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  margin-top: -10px;
+}
+.contentWrapper main .post.new {
+  overflow: hidden;
+  -webkit-transition: 0.6s all ease-out;
+  -moz-transition: 0.6s all ease-out;
+  -o-transition: 0.6s all ease-out;
+  transition: 0.6s all ease-out;
+  opacity: 1;
+  max-height: 200px;
+}
+.contentWrapper main .post.old {
+  max-height: 9999px;
+  opacity: 1;
+}
+.contentWrapper main .post .postTitle {
+  padding-right: 180px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+  box-sizing: border-box;
+}
+.contentWrapper main .post .postTitle,
+.contentWrapper main .post .postDate {
   display: inline-block;
 }
-.postDate {
+.contentWrapper main .post .postDate {
   font-size: 0.8em;
   color: #bbb;
   padding-left: 5px;
+  position: absolute;
+  height: 16px;
+  right: 30px;
+  top: 50%;
+  margin-top: -6px;
 }
-.blurb {
+.contentWrapper main .post .blurb {
   color: #333;
+}
+@media screen and (max-width: 960px) {
+  .contentWrapper main {
+    left: 50px;
+    right: 50px;
+  }
+  header {
+    padding: 100px 0 10px;
+  }
+}
+@media screen and (max-width: 580px) {
+  .contentWrapper main {
+    left: 0;
+    right: 0;
+  }
+  .contentWrapper main .content {
+    border-radius: 0;
+  }
+  header {
+    padding: 80px 0 5px;
+  }
+  header h1 {
+    font-size: 0.8em;
+  }
+}
+@media screen and (max-width: 319px) {
+  .contentWrapper main .post .postDate {
+    display: none;
+  }
 }

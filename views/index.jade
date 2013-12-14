@@ -1,19 +1,24 @@
 doctype 5
-html(lang="en")
+html(lang="en", ng-app="blogApp")
 	head
 	title Kyle Somogyi
+	meta(name="viewport", content="width=device-width, user-scalable=no")
 	link(rel="stylesheet", href="/stylesheets/style.css")
 	script(src="/socket.io/socket.io.js")
 	script(src="http://www.parsecdn.com/js/parse-1.2.12.min.js")
-	script(src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js")
+	script(src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.5/angular.js")
+	script(src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.5/angular-route.js")
 	script(src="javascripts/app.js")
 	script(src="javascripts/factories.js")
 	script(src="javascripts/services.js")
 	script(src="javascripts/controllers.js")
+	script(src="javascripts/directives.js")
 	body
+		header
+			div.background
+			h1 Kyle Somogyi
 		.contentWrapper
 			main
-				header Kyle Somogyi
 				section.content
 					ng-view
 		script.

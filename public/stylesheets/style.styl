@@ -1,37 +1,138 @@
+transition()
+	-webkit-transition: arguments
+	-moz-transition: arguments
+	-o-transition: arguments
+	transition: arguments
+
+gblur()
+	-webkit-filter: blur(arguments)
+	-moz-filter: blur(arguments)
+	-o-filter: blur(arguments)
+	filter: blur(arguments)
+
+bgColor = #556270
+
 html, body
-    height: 100%
+	height: 100%
 body
-    padding: 0
-    margin: 0
-    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif
-    background: #556270
+	padding: 0
+	margin: 0
+	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif
+	background: bgColor
 a
-    color: #00B7FF
-
-main
-    width: 600px
-    margin: 0 auto
-    
+	color: #00B7FF
+	
 header
-    font-size: 3em
-    color: #FFF
-    text-shadow: 0 0 3px rgba(0,0,0,0.2)
-    padding: 44px 0
-    text-align: center
+	font-size: 3em
+	padding: 130px 0 10px
+	position: relative
+	overflow: hidden
 
-.content
-    font-size: 1em
-    background: #FFF
-    border-radius: 2px
-    box-shadow: 0 1px 3px rgba(0,0,0,0.2)
-    padding: 15px
-    box-sizing: border-box
+	.background
+		background: url(../images/header_bg.jpg) 50% 75% no-repeat
+		background-attachment: fixed
+		background-size: cover
+		gblur(2px)
+		position: absolute
+		left: 0
+		right: 0
+		top: 0
+		bottom: -10px
+		z-index: 1
 
-.postTitle, .postDate
-    display: inline-block
-.postDate
-    font-size: 0.8em
-    color: #BBB
-    padding-left: 5px
-.blurb
-    color: #333;
+	h1
+		font-size: 1em
+		color: rgba(255, 255, 255, 0.6)
+		text-shadow: 0 0 3px rgba(0,0,0,0.2)
+		text-align: left
+		display: block
+		position: relative
+		z-index: 2
+		padding: 0 20px
+
+.contentWrapper
+	position: relative
+
+	main
+		position: absolute
+		left: 200px
+		right: 200px
+
+		.content
+			font-size: 1em
+			background: #FFF
+			border-radius: 0 0 2px 2px
+			padding: 15px
+			box-sizing: border-box
+
+		.post
+			max-height: 0
+			opacity: 0
+			display: block
+			text-decoration: none
+			position: relative
+
+			.clock
+				width: 20px
+				height: 20px
+				position: absolute
+				right: 0
+				top: 50%
+				margin-top: -10px
+			
+			&.new
+				overflow: hidden
+				transition(0.6s all ease-out)
+				opacity: 1
+				max-height: 200px
+			&.old
+				max-height: 9999px
+				opacity: 1
+			.postTitle
+				padding-right: 180px
+				white-space: nowrap
+				overflow: hidden
+				text-overflow: ellipsis
+				width: 100%
+				box-sizing: border-box
+			.postTitle, .postDate
+				display: inline-block
+			.postDate
+				font-size: 0.8em
+				color: #BBB
+				padding-left: 5px
+				position: absolute
+				height: 16px
+				right: 30px
+				top: 50%
+				margin-top: -6px
+			.blurb
+				color: #333
+
+
+@media screen and (max-width: 960px)
+	.contentWrapper
+		main
+			left: 50px
+			right: 50px
+	header
+		padding: 100px 0 10px
+@media screen and (max-width: 580px)
+	.contentWrapper
+		main
+			left: 0
+			right: 0
+
+			.content
+				border-radius: 0
+	header
+		padding: 80px 0 5px
+
+		h1
+			font-size: 0.8em
+@media screen and (max-width: 319px)
+	.contentWrapper
+		main
+			.post
+				.postDate
+					display: none

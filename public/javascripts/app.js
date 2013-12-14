@@ -1,4 +1,4 @@
-var app = angular.module("blogApp", []);
+var app = angular.module("blogApp", ['ngRoute']);
 var posts = [];
 
 app.config(function($routeProvider)
@@ -10,7 +10,8 @@ app.config(function($routeProvider)
 		})
 		.when('/post/:postId', {
 			templateUrl: 'views/post.html',
-			controller: 'PostCtrl'
+			controller: 'PostCtrl',
+			resolve: PostCtrl.resolve
 		})
 		.otherwise({
 			redirectTo: '/'
@@ -18,11 +19,4 @@ app.config(function($routeProvider)
 });
 
 var host = location.origin.replace(/^http/, 'ws');
-var socket = io.connect(host);
-socket.on('message', function(data)
-{
-	switch(data.type)
-	{
-		default: break;
-	}
-});
+window.socket = io.connect(host);
