@@ -12,16 +12,18 @@ var parseHelper = require('./parseHelper.js');
 
 var app = express();
 
+var parse_creds = require('./parse_creds.json');
+
 // all environments
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 app.engine('jade', require('jade').__express);
 app.use(express.favicon());
-app.use(express.logger('dev'));
+//app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(express.methodOverride());
-app.use(express.cookieParser('your secret here'));
+app.use(express.cookieParser(parse_creds.cookie_secret));
 app.use(express.session());
 app.use(app.router);
 app.use(require('stylus').middleware(__dirname + '/public'));
@@ -29,14 +31,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'bower_components')));
 
 // development only
-if ('development' == app.get('env'))
+/*if ('development' == app.get('env'))
 {
 	app.use(express.errorHandler());
-}
+}*/
 
 app.get('/', routes.index);
-
-var parse_creds = require('./parse_creds.json');
 
 Parse.initialize(parse_creds.app_key, parse_creds.javascript_key);
 

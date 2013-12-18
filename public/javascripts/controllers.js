@@ -3,8 +3,7 @@ var BlogCtrl = app.controller("BlogCtrl", [
 	{
 		$scope.posts = (localStorage['posts']) ? JSON.parse(localStorage['posts']) : [];
 
-		var host = location.origin.replace(/^http/, 'ws');
-		$scope.socket = io.connect(host);
+		$scope.socket = io.connect(window.location.origin);
 
 		$scope.socket.emit('get_all_posts');
 
@@ -57,8 +56,7 @@ var PostCtrl = app.controller("PostCtrl", [
 	{
 		$scope.post = {};
 
-		var host = location.origin.replace(/^http/, 'ws');
-		$scope.socket = io.connect(host);
+		$scope.socket = io.connect(window.location.origin);
 
 		$scope.socket.emit('get_post', { postId: $route.current.params.postId });
 
