@@ -39,7 +39,7 @@ app.directive("clock", function()
 			ctx.beginPath();
 			ctx.arc(width/2, height/2, (height/2)-2, 0, 2 * Math.PI, false);
 			ctx.lineWidth = 2 * scaleFactor;
-			ctx.strokeStyle = "#BBB";
+			ctx.strokeStyle = "#FFF";
 			ctx.stroke();
 
 			ctx.lineCap = 'round';
@@ -78,7 +78,7 @@ app.directive("clock", function()
 			ctx.moveTo(0, 0);
 			ctx.lineWidth = 1 * scaleFactor;
 			ctx.lineTo(0, (height/2)-(4*scaleFactor));
-			ctx.strokeStyle = "#333";
+			ctx.strokeStyle = "#FF0000";
 			ctx.stroke();
 			ctx.restore();
 		}

@@ -4,6 +4,12 @@ transition()
 	-o-transition: arguments
 	transition: arguments
 
+transform()
+	-webkit-transform: arguments
+	-moz-transform: arguments
+	-o-transform: arguments
+	transform: arguments
+
 gblur()
 	-webkit-filter: blur(arguments)
 	-moz-filter: blur(arguments)
@@ -12,55 +18,69 @@ gblur()
 
 bgColor = #556270
 
+@import url("http://fonts.googleapis.com/css?family=Alegreya+Sans+SC:400,400italic|Alike+Angular")
+
 html, body
 	height: 100%
+	width: 100%
 body
 	padding: 0
 	margin: 0
-	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif
-	background: bgColor
+	font: 14px 'Alike Angular', Helvetica, Arial, serif
+	background: url(../images/background.png) center center no-repeat
+	background-attachment: fixed
+	background-size: cover
 a
-	color: #00B7FF
+	color: #FFF
+	font-weight: bold
+	text-shadow: 0 0 10px rgba(0,0,0,0.5)
+
+*
+	-webkit-font-smoothing: antialiased
 	
 header
 	font-size: 3em
-	padding: 130px 0 10px
+	padding: 50px 0 10px
 	position: relative
 	overflow: hidden
 
-	.background
-		background: url(../images/header_bg.jpg) 50% -320px no-repeat
-		background-attachment: fixed
-		background-size: cover
-		gblur(2px)
-		position: absolute
-		left: 0
-		right: 0
-		top: 0
-		bottom: -10px
-		z-index: 1
+	.me
+		width: 100px
+		height: 100px
+		border-radius: 50px
+		overflow: hidden
+		margin: 0 auto
+		box-shadow: 0 0 10px rgba(0,0,0,0.2)
+		background: rgba(255,255,255,0.3)
+		
+		.photo
+			background: url(../images/me.png) center 20% no-repeat
+			background-size: 100% auto
+			width: 84px
+			height: 84px
+			margin: 8px 0 0 8px
+			border-radius: 50px
+			overflow: hidden
 
 	h1
+		font-family: 'Alegreya Sans SC', sans-serif
 		font-size: 1em
-		color: rgba(255, 255, 255, 0.6)
+		color: rgba(255, 255, 255, 0.8)
 		text-shadow: 0 0 3px rgba(0,0,0,0.2)
-		text-align: left
+		text-align: center
 		display: block
 		position: relative
 		z-index: 2
-		padding: 0 20px
 
 .contentWrapper
 	position: relative
 
 	main
-		position: absolute
-		left: 200px
-		right: 200px
+		width: 600px
+		margin: 0 auto
 
 		.content
 			font-size: 1em
-			background: #FFF
 			border-radius: 0 0 2px 2px
 			padding: 15px
 			box-sizing: border-box
@@ -71,6 +91,13 @@ header
 			display: block
 			text-decoration: none
 			position: relative
+			-webkit-perspective: 500px
+			perspective: 500px
+
+			&:hover .postTitle
+				transition(0.3s all ease-out)
+				color: rgba(255, 255, 255, 0.6)
+				transform(translate3d(0, 0, -10px))
 
 			.clock
 				width: 20px
@@ -90,10 +117,6 @@ header
 				opacity: 1
 			.postTitle
 				padding-right: 180px
-				white-space: nowrap
-				overflow: hidden
-				text-overflow: ellipsis
-				width: 100%
 				box-sizing: border-box
 			.postTitle, .postDate
 				display: inline-block

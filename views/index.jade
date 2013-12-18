@@ -5,9 +5,9 @@ html(lang="en", ng-app="blogApp")
 	meta(name="viewport", content="width=device-width, user-scalable=no")
 	link(rel="stylesheet", href="/stylesheets/style.css")
 	script(src="/socket.io/socket.io.js")
-	script(src="http://www.parsecdn.com/js/parse-1.2.12.min.js")
-	script(src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.5/angular.js")
-	script(src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.5/angular-route.js")
+	script(src="/parse-js-sdk/lib/parse.min.js")
+	script(src="/angular/angular.js")
+	script(src="/angular-route/angular-route.js")
 	script(src="javascripts/app.js")
 	script(src="javascripts/factories.js")
 	script(src="javascripts/services.js")
@@ -15,7 +15,8 @@ html(lang="en", ng-app="blogApp")
 	script(src="javascripts/directives.js")
 	body
 		header
-			div.background
+			div.me
+				div.photo
 			h1 Kyle Somogyi
 		.contentWrapper
 			main

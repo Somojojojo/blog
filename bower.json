@@ -1,0 +1,35 @@
+{
+  "name": "blog",
+  "version": "1.0.0",
+  "homepage": "http://kylesomogyi.com/",
+  "authors": [
+    "Kyle Somogyi <kyle.somogyi@gmail.com>"
+  ],
+  "description": "Kyle Somogyi's Blog",
+  "main": "app.js",
+  "keywords": [
+    "kyle",
+    "somogyi",
+    "blog",
+    "web",
+    "development",
+    "app",
+    "mobile",
+    "ios",
+    "android"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-route": "~1.2.5",
+    "angular": "~1.2.5",
+    "parse-js-sdk": "~1.2.13"
+  }
+}

@@ -1,58 +1,68 @@
+@import url("http://fonts.googleapis.com/css?family=Alegreya+Sans+SC:400,400italic|Alike+Angular");
 html,
 body {
   height: 100%;
+  width: 100%;
 }
 body {
   padding: 0;
   margin: 0;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  background: #556270;
+  font: 14px 'Alike Angular', Helvetica, Arial, serif;
+  background: url("../images/background.png") center center no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
 }
 a {
-  color: #00b7ff;
+  color: #fff;
+  font-weight: bold;
+  text-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+* {
+  -webkit-font-smoothing: antialiased;
 }
 header {
   font-size: 3em;
-  padding: 130px 0 10px;
+  padding: 50px 0 10px;
   position: relative;
   overflow: hidden;
 }
-header .background {
-  background: url("../images/header_bg.jpg") 50% 75% no-repeat;
-  background-attachment: fixed;
-  background-size: cover;
-  -webkit-filter: blur(2px);
-  -moz-filter: blur(2px);
-  -o-filter: blur(2px);
-  filter: blur(2px);
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: -10px;
-  z-index: 1;
+header .me {
+  width: 100px;
+  height: 100px;
+  border-radius: 50px;
+  overflow: hidden;
+  margin: 0 auto;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  background: rgba(255,255,255,0.3);
+}
+header .me .photo {
+  background: url("../images/me.png") center 20% no-repeat;
+  background-size: 100% auto;
+  width: 84px;
+  height: 84px;
+  margin: 8px 0 0 8px;
+  border-radius: 50px;
+  overflow: hidden;
 }
 header h1 {
+  font-family: 'Alegreya Sans SC', sans-serif;
   font-size: 1em;
-  color: rgba(255,255,255,0.6);
+  color: rgba(255,255,255,0.8);
   text-shadow: 0 0 3px rgba(0,0,0,0.2);
-  text-align: left;
+  text-align: center;
   display: block;
   position: relative;
   z-index: 2;
-  padding: 0 20px;
 }
 .contentWrapper {
   position: relative;
 }
 .contentWrapper main {
-  position: absolute;
-  left: 200px;
-  right: 200px;
+  width: 600px;
+  margin: 0 auto;
 }
 .contentWrapper main .content {
   font-size: 1em;
-  background: #fff;
   border-radius: 0 0 2px 2px;
   padding: 15px;
   box-sizing: border-box;
@@ -63,6 +73,19 @@ header h1 {
   display: block;
   text-decoration: none;
   position: relative;
+  -webkit-perspective: 500px;
+  perspective: 500px;
+}
+.contentWrapper main .post:hover .postTitle {
+  -webkit-transition: 0.3s all ease-out;
+  -moz-transition: 0.3s all ease-out;
+  -o-transition: 0.3s all ease-out;
+  transition: 0.3s all ease-out;
+  color: rgba(255,255,255,0.6);
+  -webkit-transform: translate3d(0, 0, -10px);
+  -moz-transform: translate3d(0, 0, -10px);
+  -o-transform: translate3d(0, 0, -10px);
+  transform: translate3d(0, 0, -10px);
 }
 .contentWrapper main .post .clock {
   width: 20px;
@@ -87,10 +110,6 @@ header h1 {
 }
 .contentWrapper main .post .postTitle {
   padding-right: 180px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  width: 100%;
   box-sizing: border-box;
 }
 .contentWrapper main .post .postTitle,
