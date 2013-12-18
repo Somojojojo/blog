@@ -10,13 +10,9 @@ app.config(function($routeProvider)
 		})
 		.when('/post/:postId', {
 			templateUrl: 'views/post.html',
-			controller: 'PostCtrl',
-			resolve: PostCtrl.resolve
+			controller: 'PostCtrl'
 		})
 		.otherwise({
 			redirectTo: '/'
 		});
 });
-
-var host = location.origin.replace(/^http/, 'ws');
-window.socket = io.connect(host);

@@ -30,11 +30,26 @@ exports.getPost = function(Parse, _postId)
 	return query.get(_postId);
 };
 
-exports.parsePostData = function(_posts, _howMany)
+exports.getAllPosts = function(Parse)
+{
+	var PostStatus = Parse.Object.extend("PostStatus");
+	var published = new PostStatus();
+	published.id = "lwI1dkKmM3";
+
+	var prPosts = Parse.Object.extend("Posts");
+
+	var query = new Parse.Query(prPosts);
+	query.limit(25);
+	query.equalTo("status", published);
+	query.descending("createdAt");
+	return query.find();
+};
+
+exports.parsePostData = function(_posts, _howMany, _age)
 {
 	if (_howMany === this.QuantityType.One)
 	{
-		var d = new Date(_post.createdAt),
+		var d = new Date(_posts.createdAt),
 			npost = {},
 			diff = new Date().getTime() - d.getTime(),
 			seconds = parseInt(diff / 1000, 10),
@@ -45,13 +60,12 @@ exports.parsePostData = function(_posts, _howMany)
 			if (hours > 0) npost.datePosted = hours+" hours ago";
 			else if (minutes > 0) npost.datePosted = minutes+" minutes ago";
 			else if (seconds > 0) npost.datePosted = seconds+" seconds ago";
-		} else {
-			npost.datePosted = $filter('date')(d, 'medium');
 		}
 		npost.originalDate = d.getTime();
+		npost.age = _age;
 
-		npost.title = _post.get('title');
-		npost.body = _post.get('body');
+		npost.title = _posts.get('title');
+		npost.body = _posts.get('body');
 
 		return npost;
 	} else {
@@ -75,10 +89,9 @@ exports.parsePostData = function(_posts, _howMany)
 				if (hours > 0) npost.datePosted = hours+" hours ago";
 				else if (minutes > 0) npost.datePosted = minutes+" minutes ago";
 				else if (seconds > 0) npost.datePosted = seconds+" seconds ago";
-			} else {
-				npost.datePosted = $filter('date')(d, 'medium');
 			}
 			npost.originalDate = d.getTime();
+			npost.age = _age;
 			
 			posts.push(npost);
 		}

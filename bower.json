@@ -29,7 +29,6 @@
   ],
   "dependencies": {
     "angular-route": "~1.2.5",
-    "angular": "~1.2.5",
-    "parse-js-sdk": "~1.2.13"
+    "angular": "~1.2.5"
   }
 }

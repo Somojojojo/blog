@@ -1,156 +1,97 @@
-app.controller("BlogCtrl", [
-	"$scope", "$filter", "ParseService", "PostStatus", function($scope, $filter, ParseService, PostStatus)
+var BlogCtrl = app.controller("BlogCtrl", [
+	"$scope", "$filter", function($scope, $filter)
 	{
 		$scope.posts = (localStorage['posts']) ? JSON.parse(localStorage['posts']) : [];
 
-		var prPosts = Parse.Object.extend("Posts");
+		var host = location.origin.replace(/^http/, 'ws');
+		$scope.socket = io.connect(host);
 
-		var query = new Parse.Query(prPosts);
-		query.limit(25);
-		query.equalTo("status", PostStatus.published);
-		query.descending("createdAt");
-		query.find({
-			success: function(_posts)
-			{
-				var posts = [];
-				for (var x in _posts)
-				{
-					var post = _posts[x],
-						npost = {};
-					npost.id = post.id;
-					npost.title = post.get("title");
-					npost.body = post.get("body");
-					npost.blurb = npost.body.substring(0, 200);
-					npost.age = 'old';
-					
-					var d = new Date(post.createdAt),
-						diff = new Date().getTime() - d.getTime(),
-						seconds = parseInt(diff / 1000, 10),
-						minutes = parseInt(seconds / 60, 10),
-						hours = parseInt(minutes / 60, 10);
-					if (diff < 82800000)
-					{
-						if (hours > 0) npost.datePosted = hours+" hours ago";
-						else if (minutes > 0) npost.datePosted = minutes+" minutes ago";
-						else if (seconds > 0) npost.datePosted = seconds+" seconds ago";
-					} else {
-						npost.datePosted = $filter('date')(d, 'medium');
-					}
-					npost.originalDate = d.getTime();
-					
-					posts.push(npost);
-				}
-				localStorage['posts'] = JSON.stringify(posts);
-				$scope.$apply(function()
-				{
-					$scope.posts = posts;
+		$scope.socket.emit('get_all_posts');
 
-					setInterval(function()
-					{
-						for (var x in $scope.posts)
-						{
-							var d = $scope.posts[x].originalDate,
-								diff = new Date().getTime() - d,
-								seconds = parseInt(diff / 1000, 10),
-								minutes = parseInt(seconds / 60, 10),
-								hours = parseInt(minutes / 60, 10);
-							if (diff < 82800000)
-							{
-								if (hours > 0) $scope.posts[x].datePosted = hours+" hours ago";
-								else if (minutes > 0) $scope.posts[x].datePosted = minutes+" minutes ago";
-								else if (seconds > 0) $scope.posts[x].datePosted = seconds+" seconds ago";
-							} else {
-								$scope.posts[x].datePosted = $filter('date')(d, 'medium');
-							}
-						}
-
-						$scope.$apply(function()
-						{
-							$scope.posts = $scope.posts;
-						});
-					}, 1000);
-				});
-			},
-			error: function(error)
-			{
-				console.log("Error: "+error.code+" "+error.message);
-			}
-		});
-		
-		window.socket.on('new_post', function(data)
+		$scope.socket.on('new_post', function(data)
 		{
-			var post = data.postData;
-			post.age = 'new';
-			$scope.posts.push( post );
+			$scope.posts.push( data.postData );
+		});
+
+		$scope.socket.on('all_posts', function(data)
+		{
+			$scope.posts = data.posts;
+			localStorage['posts'] = JSON.stringify(data.posts);
+
+			setInterval(function()
+			{
+				BlogCtrl.updatePostsData($scope, $filter);
+			}, 1000);
+			BlogCtrl.updatePostsData($scope, $filter);
 		});
 	}
 ]);
 
-var PostCtrl = app.controller("PostCtrl", [
-	"$scope", "$filter", "post", function($scope, $filter, post)
+BlogCtrl.updatePostsData = function($scope, $filter)
+{
+	for (var x in $scope.posts)
 	{
-		var _post = post;
-
-		var d = new Date(_post.createdAt),
-			npost = {},
-			diff = new Date().getTime() - d.getTime(),
+		var d = $scope.posts[x].originalDate,
+			diff = new Date().getTime() - d,
 			seconds = parseInt(diff / 1000, 10),
 			minutes = parseInt(seconds / 60, 10),
 			hours = parseInt(minutes / 60, 10);
 		if (diff < 82800000)
 		{
-			if (hours > 0) npost.datePosted = hours+" hours ago";
-			else if (minutes > 0) npost.datePosted = minutes+" minutes ago";
-			else if (seconds > 0) npost.datePosted = seconds+" seconds ago";
+			if (hours > 0) $scope.posts[x].datePosted = hours+" hours ago";
+			else if (minutes > 0) $scope.posts[x].datePosted = minutes+" minutes ago";
+			else if (seconds > 0) $scope.posts[x].datePosted = seconds+" seconds ago";
 		} else {
-			npost.datePosted = $filter('date')(d, 'medium');
+			$scope.posts[x].datePosted = $filter('date')(d, 'medium');
 		}
-		npost.originalDate = d.getTime();
+	}
 
-		npost.title = _post.get('title');
-		npost.body = _post.get('body');
+	$scope.$apply(function()
+	{
+		$scope.posts = $scope.posts;
+	});
+};
 
-		$scope.post = npost;
+var PostCtrl = app.controller("PostCtrl", [
+	"$scope", "$filter", "$route", function($scope, $filter, $route)
+	{
+		$scope.post = {};
 
-		setInterval(function()
+		var host = location.origin.replace(/^http/, 'ws');
+		$scope.socket = io.connect(host);
+
+		$scope.socket.emit('get_post', { postId: $route.current.params.postId });
+
+		$scope.socket.on('post', function(data)
 		{
-			var d = $scope.post.originalDate,
-				diff = new Date().getTime() - d,
-				seconds = parseInt(diff / 1000, 10),
-				minutes = parseInt(seconds / 60, 10),
-				hours = parseInt(minutes / 60, 10);
-			if (diff < 82800000)
+			$scope.post = data.postData;
+			setInterval(function()
 			{
-				if (hours > 0) $scope.post.datePosted = hours+" hours ago";
-				else if (minutes > 0) $scope.post.datePosted = minutes+" minutes ago";
-				else if (seconds > 0) $scope.post.datePosted = seconds+" seconds ago";
-			} else {
-				$scope.post.datePosted = $filter('date')(d, 'medium');
-			}
-
-			$scope.$apply(function()
-			{
-				$scope.post = $scope.post;
-			});
-		}, 1000);
+				PostCtrl.updatePostData($scope, $filter);
+			}, 1000);
+			PostCtrl.updatePostData($scope, $filter);
+		});
 	}
 ]);
 
-PostCtrl.resolve = {
-	post: function($q, $filter, ParseService, $route, $location)
+PostCtrl.updatePostData = function($scope, $filter)
+{
+	var d = $scope.post.originalDate,
+		diff = new Date().getTime() - d,
+		seconds = parseInt(diff / 1000, 10),
+		minutes = parseInt(seconds / 60, 10),
+		hours = parseInt(minutes / 60, 10);
+	if (diff < 82800000)
 	{
-		var prPosts = Parse.Object.extend("Posts");
-
-		var query = new Parse.Query(prPosts);
-		return query.get($route.current.params.postId, {
-			success: function(_post)
-			{
-				return _post;
-			},
-			error: function()
-			{
-				$location.path('/');
-			}
-		});
+		if (hours > 0) $scope.post.datePosted = hours+" hours ago";
+		else if (minutes > 0) $scope.post.datePosted = minutes+" minutes ago";
+		else if (seconds > 0) $scope.post.datePosted = seconds+" seconds ago";
+	} else {
+		$scope.post.datePosted = $filter('date')(d, 'medium');
 	}
+
+	$scope.$apply(function()
+	{
+		$scope.post = $scope.post;
+	});
 };
